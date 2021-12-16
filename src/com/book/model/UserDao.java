@@ -32,24 +32,27 @@ public class UserDao {
 
 	}
 
-//	public User validateUser(String mailid)
-//	{
-//		String validateQuery="select * from customer_register where email_id="+mailid;
-//		Connection con=Connectionutil.getDbConnection();
-//		User user=null;
-//		try {
-//			Statement st=con.createStatement();
-//			ResultSet rs=st.executeQuery(validateQuery);
-//			if(rs.next())
-//			{
-//				user=new User(rs.getString(2),mailid, validateQuery);
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			System.out.println("Statement error");
-//		} 
-//		return user;
-//	}
+	public User validateUser(String email_id,String password)
+	{
+		String validateQuery="select * from customer_register where email_id='"+email_id+"' and password='"+password+"'";
+		Connection con=Connectionutil.getDbConnection();
+		User user=null;
+		try {
+			Statement st=con.createStatement();
+			ResultSet rs=st.executeQuery(validateQuery);
+			if(rs.next())
+			{
+				user=new User(rs.getString(2),rs.getLong(3),rs.getString(4),email_id, password);
+			}
+			else {
+				System.out.println("Not a valid user");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Statement error");
+		} 
+		return user;
+	}
 
 }

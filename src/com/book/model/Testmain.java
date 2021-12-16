@@ -87,13 +87,37 @@ public class Testmain {
 			userDao.insertUser(user);
 			break;
 
-//		case 2:
-//			userDao = new UserDao();
-//			System.out.println("User Login ");
-//			System.out.println("Enter the registered mail ID");
-//			String mailid = scan.nextLine();
-//			User currentUser = userDao.validateUser(mailid);
-
+		case 2:
+			userDao = new UserDao();
+			System.out.println("User Login ");
+			System.out.println("Enter the registered mail ID");
+			String mailid = scan.nextLine();
+			do {
+				if (mailid.matches("[a-z0-9]+[@][a-z]+[.][a-z]+{8,15}")) {
+					flag = 0;
+					break;
+				} else
+					System.out.println("Enter valid email ");
+				email = scan.nextLine();
+				flag = 1;
+			} while (flag == 1);
+			System.out.println("Enter password:");
+			password=scan.nextLine();
+			do {
+				if (password.matches("[A-Za-z0-9]{8,10}")) {
+					flag = 0;
+					break;
+				} else
+					System.out.println("Enter valid password ");
+				password = scan.nextLine();
+				flag = 1;
+			} while (flag == 1);
+			
+			User currentUser = userDao.validateUser(mailid, password);
+			if(currentUser!=null) {
+				System.out.println("Welcome\t"+currentUser.getName());
+			
+		}
 		}
 	}
 }
