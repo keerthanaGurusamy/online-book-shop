@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class UserDao {
 
 	public void insertUser(User user) {
-		String insertQuery = "insert into customer_register(name,phoneNo,address,email_id,password) values(?,?,?,?,?)";
+		String insertQuery = "insert into customer_details(name,phoneNo,address,email_id,password) values(?,?,?,?,?)";
 
 		Connectionutil conUtil = new Connectionutil();
 		Connection con = conUtil.getDbConnection();
