@@ -1,4 +1,4 @@
-package com.book.model;
+package com.onlinebookshop.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

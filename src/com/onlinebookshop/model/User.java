@@ -1,4 +1,4 @@
-package com.book.model;
+package com.onlinebookshop.model;
 
 import java.util.Objects;
 

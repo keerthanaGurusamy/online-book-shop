@@ -1,6 +1,12 @@
-package com.book.model;
+package com.onlinebookshop.test;
 
+import java.util.List;
 import java.util.Scanner;
+
+import com.onlinebookshop.dao.ProductsDao;
+import com.onlinebookshop.dao.UserDao;
+import com.onlinebookshop.model.Products;
+import com.onlinebookshop.model.User;
 
 public class Testmain {
 
@@ -85,8 +91,8 @@ public class Testmain {
 			} while (flag == 1);
 			User user = new User(name, phoneNo, address, email, password);
 			userDao.insertUser(user);
-			break;
-
+			
+        //LOG IN
 		case 2:
 			userDao = new UserDao();
 			System.out.println("User Login ");
@@ -116,7 +122,55 @@ public class Testmain {
 			User currentUser = userDao.validateUser(mailid, password);
 			if(currentUser!=null) {
 				System.out.println("Welcome\t"+currentUser.getName());
-			
+				//UPDATE DETAILS
+				System.out.println("Enter update details");
+				String updates=scan.nextLine();
+				userDao.update(updates);
+				
+				//DELETE DETAILS
+				System.out.println("Enter delete Details");
+				String delete=scan.nextLine();
+				userDao.deletedDetails(delete);
+				
+			    System.out.println("\n1.Show Products\n2.Show Orders");
+			    int userChoice=Integer.parseInt(scan.nextLine());
+			    switch(userChoice)
+			    {
+			    case 1:
+			    
+			    ProductsDao proDao=new ProductsDao();
+			    List<Products> l_pro =proDao.showProduct();
+				for(int i=0;i<l_pro.size();i++)
+				{
+					System.out.println(l_pro.get(i));
+					
+				}
+//				System.out.println("\n1.Order Product\n2.View Orders");
+//				int orderChoice=Integer.parseInt(scan.nextLine());
+//				switch(orderChoice)
+//				{
+//				case 1:
+//					do {
+//						for(int i=0;i<l_pro.size();i++)
+//							
+//						{
+//							System.out.println(l_pro.get(i));
+//						}
+//					System.out.println("Enter the Product Name");
+//					String proName=scan.nextLine();
+//					for(int i=0;i<l_pro.size();i++)
+//					{
+//							if(l_pro.get(i).getBook_code().equals(proName))
+//							{
+//								Products product=l_pro.get(i);
+//							}
+//					}
+//					System.out.println("Enter no of Products needed");
+//					int noOf=Integer.parseInt(scan.nextLine());
+//					
+//					}
+			  }
+				
 		}
 		}
 	}
