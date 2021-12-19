@@ -3,7 +3,7 @@ package com.onlinebookshop.test;
 import java.util.List;
 import java.util.Scanner;
 
-import com.onlinebookshop.dao.BooksDao;
+import com.onlinebookshop.dao.ProductsDao;
 import com.onlinebookshop.dao.UserDao;
 import com.onlinebookshop.model.Products;
 import com.onlinebookshop.model.User;
@@ -14,11 +14,12 @@ public class Testmain {
 
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\tWelcome to Online Book Shop");
-		System.out.println("\n1.Register\n2.Login\n3.Update\n4.Delete\nEnter your Choice :");
+		System.out.println("\n1.Register\n2.Login\n3.Delete\nEnter your Choice :");
 		int choice = Integer.parseInt(scan.nextLine());
 
 		UserDao userDao = null;
-		switch (choice) {
+		switch (choice) 
+		{
 		case 1:
 
 			userDao = new UserDao();
@@ -126,41 +127,171 @@ public class Testmain {
 				System.out.println("Welcome admin");
 				System.out.println("\n1.Add Books");
 				
-				break;
-			} else if(currentUser!=null) {
+				System.out.print("Category :");
+				String category = scan.nextLine();
+				do{
+					if(category.matches("[A-Z a-z]{6,}"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid category : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				System.out.print("Description :");
+				String Description = scan.nextLine();
+				do{
+					if(Description.matches("[A-Z a-z]{6,}"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid Description : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				System.out.print("Publisher_id :");
+				String Publisher_id = scan.nextLine();
+				do{
+					if(Publisher_id.matches("[0-9]{2,5}"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid Publisher_id : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				int publisher=Integer.parseInt(Publisher_id);
+				System.out.print("book_title :");
+				String book_title = scan.nextLine();
+				do{
+					if(book_title.matches("[A-z a-z]{5,}"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid book_title : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				System.out.print("book_code :");
+				String book_code = scan.nextLine();
+				do{
+					if(book_title.matches("[A_Z]+[0-9]{2,5}"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid book_title : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				System.out.print("price :");
+				String price = scan.nextLine();
+				do{
+					if(price.matches("[0-9]+"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid price : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				System.out.print("publish_date :");
+				String publish_date = scan.nextLine();
+				do{
+					if(publish_date.matches("[0-9]{8,10}"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid publish_date : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				System.out.print("Condition :");
+				String Condition = scan.nextLine();
+				do{
+					if(Condition.matches("[A-Za-z]{3,10}"))
+					{
+						flag = 0;
+						break;
+					}
+					else
+					{
+						System.out.println("Enter valid Condition : ");
+						category = scan.nextLine();
+						flag = 1;
+					}
+				}while( flag == 1); 
+				
+					ProductsDao prodao=new ProductsDao();
+					Products product = new Products();
+					prodao.insertBooks(product);
+					
+				}
+			else if(currentUser!=null) {
 				System.out.println("Welcome\t"+currentUser.getName());
 				flag=1;
-			}
-				else
-					flag=0;
-			}while(flag==0);
-		case 3:
-				//UPDATE DETAILS
-				System.out.println("Enter update details");
-				String updates=scan.nextLine();
-				userDao.update(updates);
 				
-		case 4:
-				//DELETE DETAILS
-				System.out.println("Enter delete Details");
-				String delete=scan.nextLine();
-				userDao.deletedDetails(delete);
-				
-			    System.out.println("\n1.Show Products\n2.Show Orders");
+				System.out.println("\n1.Show Products\n2.update details");
 			    int userChoice=Integer.parseInt(scan.nextLine());
 			    
 			    switch(userChoice)
 			    {
 			    case 1:
 			    
-			    BooksDao proDao=new BooksDao();
+			    ProductsDao proDao=new ProductsDao();
 			    List<Products> l_pro =proDao.showProduct();
 				for(int i=0;i<l_pro.size();i++)
 				{
 					System.out.println(l_pro.get(i));
 					
 				}
-								
+			    case 2:
+			    	//UPDATE DETAILS
+					System.out.println("Enter update details");
+					String updates=scan.nextLine();
+					userDao.update(updates);
+			    }		
+			}
+				else
+					flag=0;
+			}while(flag==0);
+		
+				
+				
+		case 3:
+				//DELETE DETAILS
+				System.out.println("Enter delete Details");
+				String delete=scan.nextLine();
+				userDao.deletedDetails(delete);
+				
+			    
 //				System.out.println("\n1.Order Product\n2.View Orders");
 //				int orderChoice=Integer.parseInt(scan.nextLine());
 //				switch(orderChoice)
@@ -186,8 +317,6 @@ public class Testmain {
 //					
 //					}
 			  
-				
-		}
-		}
+		}				
 	}
 }
