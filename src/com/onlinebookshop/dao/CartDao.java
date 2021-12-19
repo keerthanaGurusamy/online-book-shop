@@ -4,6 +4,6 @@ public class CartDao {
 
 	public void insertOrder()
 	{
-		String insertQuery="insert into cart()"
+		String insertQuery="insert into cart()";
 	}
 }

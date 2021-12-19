@@ -8,6 +8,10 @@ email_id VARCHAR2(30)NOT NULL,
 password VARCHAR2(30)NOT NULL,
 CONSTRAINT cus PRIMARY KEY(cus_id),UNIQUE(email_id),UNIQUE(phoneNo));
 
+insert into users (name,phoneNo,role,address,email_id,password) values('keerthi','9345257036','admin','Mylapore,chennai,600019','keke052000@gmail.com','keke0502');
+insert into users (name,phoneNo,role,address,email_id,password) values('keerthiga','9345257096','admin','Mylapore,chennai,600019','keke05@gmail.com','keke05020');
+insert into users (name,phoneNo,role,address,email_id,password) values('keerthaan','9345250036','admin','Mylapore,chennai,600019','keerthi02@gmail.com','keerthi05');
+
 drop table users cascade constraints;
 commit;
 create sequence cus_id increment by 1 start with 100;

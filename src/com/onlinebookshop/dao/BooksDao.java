@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.onlinebookshop.model.Products;
 
-public class ProductsDao {
+public class BooksDao {
 
 	public List<Products> showProduct()
 	{
@@ -33,12 +33,12 @@ public class ProductsDao {
 		return productsList;
 	}
 	public int findProduct(Products product) {
-		String finduser="select category,description,price from books where book_title='"+product.getBook_title()+"'";
+		String find="select book_id from books where book_title='"+product.getBook_title()+"'";
 		Connection con = Connectionutil.getDbConnection();
 		int productId=0;
 		try {
 			Statement stm =con.createStatement();
-			ResultSet rs=stm.executeQuery(finduser);
+			ResultSet rs=stm.executeQuery(find);
 			if(rs.next())
 			{
 				productId=rs.getInt(1);

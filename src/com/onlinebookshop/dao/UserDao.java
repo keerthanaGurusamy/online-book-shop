@@ -34,17 +34,34 @@ public class UserDao {
 			e.printStackTrace();
 			System.out.println("Value not inserted in the table");
 		}
-
 	}
-
+	public User admin(String email_id,String password)
+	{
+		String AdminQuery="select * from users where role='admin'and email_id='"+email_id+"'and password='"+password+"'";
+		
+		Connection con=Connectionutil.getDbConnection();
+		User user=null;
+		try {
+			Statement stm =con.createStatement();
+			ResultSet rs=stm.executeQuery(AdminQuery);
+			if(rs.next())
+			{
+				 user=new User(rs.getString(2),rs.getLong(3),rs.getString(5),email_id, password);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
 	public User validateUser(String email_id,String password)
 	{
 		String validateQuery="select * from users where email_id='"+email_id+"' and password='"+password+"'";
 		Connection con=Connectionutil.getDbConnection();
 		User user=null;
 		try {
-			Statement st=con.createStatement();
-			ResultSet rs=st.executeQuery(validateQuery);
+			Statement stm=con.createStatement();
+			ResultSet rs=stm.executeQuery(validateQuery);
 			if(rs.next())
 			{
 				user=new User(rs.getString(2),rs.getLong(3),rs.getString(4),email_id, password);
@@ -68,7 +85,7 @@ public class UserDao {
 		try {
 			PreparedStatement pst=con.prepareStatement(updateQuery);
 			pst.setString(1, update.split(",")[0]);
-			pst.setInt(2, Integer.parseInt(update.split(",")[1]));
+			pst.setString(2,update.split(",")[1]);
 			int i=pst.executeUpdate();
 			System.out.println(i+"row updated");
 			pst.close();

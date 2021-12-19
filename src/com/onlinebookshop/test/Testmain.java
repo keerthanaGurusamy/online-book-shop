@@ -3,7 +3,7 @@ package com.onlinebookshop.test;
 import java.util.List;
 import java.util.Scanner;
 
-import com.onlinebookshop.dao.ProductsDao;
+import com.onlinebookshop.dao.BooksDao;
 import com.onlinebookshop.dao.UserDao;
 import com.onlinebookshop.model.Products;
 import com.onlinebookshop.model.User;
@@ -14,7 +14,7 @@ public class Testmain {
 
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\tWelcome to Online Book Shop");
-		System.out.println("\n1.Register\n2.Login\nEnter your Choice :");
+		System.out.println("\n1.Register\n2.Login\n3.Update\n4.Delete\nEnter your Choice :");
 		int choice = Integer.parseInt(scan.nextLine());
 
 		UserDao userDao = null;
@@ -97,9 +97,9 @@ public class Testmain {
 			userDao = new UserDao();
 			System.out.println("User Login ");
 			System.out.println("Enter the registered mail ID");
-			String mailid = scan.nextLine();
+			String email_id = scan.nextLine();
 			do {
-				if (mailid.matches("[a-z0-9]+[@][a-z]+[.][a-z]+{8,15}")) {
+				if (email_id.matches("[a-z0-9]+[@][a-z]+[.][a-z]+{8,15}")) {
 					flag = 0;
 					break;
 				} else
@@ -118,15 +118,29 @@ public class Testmain {
 				password = scan.nextLine();
 				flag = 1;
 			} while (flag == 1);
+			do {
+			User currentUser = userDao.validateUser(email_id, password);
+			User validAdmin=userDao.admin(email_id, password);
 			
-			User currentUser = userDao.validateUser(mailid, password);
-			if(currentUser!=null) {
+			if(validAdmin!=null) {
+				System.out.println("Welcome admin");
+				System.out.println("\n1.Add Books");
+				
+				break;
+			} else if(currentUser!=null) {
 				System.out.println("Welcome\t"+currentUser.getName());
+				flag=1;
+			}
+				else
+					flag=0;
+			}while(flag==0);
+		case 3:
 				//UPDATE DETAILS
 				System.out.println("Enter update details");
 				String updates=scan.nextLine();
 				userDao.update(updates);
 				
+		case 4:
 				//DELETE DETAILS
 				System.out.println("Enter delete Details");
 				String delete=scan.nextLine();
@@ -134,17 +148,19 @@ public class Testmain {
 				
 			    System.out.println("\n1.Show Products\n2.Show Orders");
 			    int userChoice=Integer.parseInt(scan.nextLine());
+			    
 			    switch(userChoice)
 			    {
 			    case 1:
 			    
-			    ProductsDao proDao=new ProductsDao();
+			    BooksDao proDao=new BooksDao();
 			    List<Products> l_pro =proDao.showProduct();
 				for(int i=0;i<l_pro.size();i++)
 				{
 					System.out.println(l_pro.get(i));
 					
 				}
+								
 //				System.out.println("\n1.Order Product\n2.View Orders");
 //				int orderChoice=Integer.parseInt(scan.nextLine());
 //				switch(orderChoice)
@@ -169,7 +185,7 @@ public class Testmain {
 //					int noOf=Integer.parseInt(scan.nextLine());
 //					
 //					}
-			  }
+			  
 				
 		}
 		}
