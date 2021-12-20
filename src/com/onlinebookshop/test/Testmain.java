@@ -143,9 +143,9 @@ public class Testmain {
 					}
 				}while( flag == 1); 
 				System.out.print("Description :");
-				String Description = scan.nextLine();
+				String description = scan.nextLine();
 				do{
-					if(Description.matches("[A-Z a-z]{6,}"))
+					if(description.matches("[A-Z a-z]{6,}"))
 					{
 						flag = 0;
 						break;
@@ -153,14 +153,14 @@ public class Testmain {
 					else
 					{
 						System.out.println("Enter valid Description : ");
-						category = scan.nextLine();
+						description = scan.nextLine();
 						flag = 1;
 					}
 				}while( flag == 1); 
 				System.out.print("Publisher_id :");
-				String Publisher_id = scan.nextLine();
+				String publisher = scan.nextLine();
 				do{
-					if(Publisher_id.matches("[0-9]{2,5}"))
+					if(publisher.matches("[0-9]{2,5}"))
 					{
 						flag = 0;
 						break;
@@ -168,11 +168,11 @@ public class Testmain {
 					else
 					{
 						System.out.println("Enter valid Publisher_id : ");
-						category = scan.nextLine();
+						publisher = scan.nextLine();
 						flag = 1;
 					}
 				}while( flag == 1); 
-				int publisher=Integer.parseInt(Publisher_id);
+				int publisher_id=Integer.parseInt(publisher);
 				System.out.print("book_title :");
 				String book_title = scan.nextLine();
 				do{
@@ -183,30 +183,30 @@ public class Testmain {
 					}
 					else
 					{
-						System.out.println("Enter valid book_title : ");
-						category = scan.nextLine();
+						System.out.println("Enter valid booktitle : ");
+						book_title = scan.nextLine();
 						flag = 1;
 					}
 				}while( flag == 1); 
 				System.out.print("book_code :");
 				String book_code = scan.nextLine();
 				do{
-					if(book_title.matches("[A_Z]+[0-9]{2,5}"))
+					if(book_code.matches("[A-Z]+[0-9]{2,5}"))
 					{
 						flag = 0;
 						break;
 					}
 					else
 					{
-						System.out.println("Enter valid book_title : ");
-						category = scan.nextLine();
+						System.out.println("Enter valid bookcode : ");
+						book_code = scan.nextLine();
 						flag = 1;
 					}
 				}while( flag == 1); 
 				System.out.print("price :");
-				String price = scan.nextLine();
+				String prc = scan.nextLine();
 				do{
-					if(price.matches("[0-9]+"))
+					if(prc.matches("[0-9]+"))
 					{
 						flag = 0;
 						break;
@@ -214,29 +214,30 @@ public class Testmain {
 					else
 					{
 						System.out.println("Enter valid price : ");
-						category = scan.nextLine();
+						prc = scan.nextLine();
 						flag = 1;
 					}
 				}while( flag == 1); 
+				int price = Integer.parseInt(prc);
 				System.out.print("publish_date :");
 				String publish_date = scan.nextLine();
 				do{
-					if(publish_date.matches("[0-9]{8,10}"))
+					if(publish_date.matches("[0-9]{2}+[-][0-9]{2}+[-][0-9]{4}"))
 					{
 						flag = 0;
 						break;
 					}
 					else
 					{
-						System.out.println("Enter valid publish_date : ");
-						category = scan.nextLine();
+						System.out.println("Enter valid publishdate : ");
+						publish_date = scan.nextLine();
 						flag = 1;
 					}
 				}while( flag == 1); 
 				System.out.print("Condition :");
-				String Condition = scan.nextLine();
+				String condition = scan.nextLine();
 				do{
-					if(Condition.matches("[A-Za-z]{3,10}"))
+					if(condition.matches("[A-Za-z]{3,10}"))
 					{
 						flag = 0;
 						break;
@@ -244,15 +245,16 @@ public class Testmain {
 					else
 					{
 						System.out.println("Enter valid Condition : ");
-						category = scan.nextLine();
+						condition = scan.nextLine();
 						flag = 1;
 					}
 				}while( flag == 1); 
 				
 					ProductsDao prodao=new ProductsDao();
-					Products product = new Products();
+					Products product = new Products(category, description, publisher_id, book_title, book_code,
+							price, publish_date, condition);
 					prodao.insertBooks(product);
-					
+					break;
 				}
 			else if(currentUser!=null) {
 				System.out.println("Welcome\t"+currentUser.getName());
