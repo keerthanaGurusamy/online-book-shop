@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.onlinebookshop.model.Products;
+import com.onlinebookshop.model.Bookdetails;
 import com.onlinebookshop.model.User;
 
 public class UserDao {
@@ -35,6 +37,7 @@ public class UserDao {
 			System.out.println("Value not inserted in the table");
 		}
 	}
+	//admin
 	public User admin(String email_id,String password)
 	{
 		String AdminQuery="select * from users where role='admin'and email_id='"+email_id+"'and password='"+password+"'";
@@ -54,6 +57,7 @@ public class UserDao {
 		}
 		return user;
 	}
+	//user
 	public User validateUser(String email_id,String password)
 	{
 		String validateQuery="select * from users where email_id='"+email_id+"' and password='"+password+"'";
@@ -76,7 +80,7 @@ public class UserDao {
 		} 
 		return user;
 	}
-	
+	// update profile
 	public void update(String update) {
 		String updateQuery="update users set password=? where email_id=?";
 		Connection con = Connectionutil.getDbConnection();
@@ -97,10 +101,10 @@ public class UserDao {
 			System.out.println("Connection failed");
 		}
 		
-		//Delete user details
-	
+		
 	}
-
+	//Delete user details
+	
 	public void deletedDetails(String delete) {
 		String deleteQuery="delete from users where email_id=?";
 		Connection con=Connectionutil.getDbConnection();
@@ -116,6 +120,43 @@ public class UserDao {
 		}
 		
 		
+	}
+	
+	public List<User> viewUser(){
+		List<User> userList=new ArrayList<User>();
+		String show="select * from users where role='user'";
+		Connection con=Connectionutil.getDbConnection();
+		try {
+			Statement stm=con.createStatement();
+			ResultSet rs=stm.executeQuery(show);
+			while(rs.next()) {
+				User user=new User(rs.getString(2),rs.getLong(3),rs.getString(5),rs.getString(6),rs.getString(7));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userList;
+	}
+	
+	public int findUserId(String emailId)
+	{
+		String findUser="select cus_id from users where email_id='"+emailId+"'";
+		Connection con=Connectionutil.getDbConnection();
+        int CusId=0;
+        try {
+			Statement stm = con.createStatement();
+			ResultSet rs=stm.executeQuery(findUser);
+			if(rs.next())
+			{
+				CusId=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return CusId;
 	}
 }
 	

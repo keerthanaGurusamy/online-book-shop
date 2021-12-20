@@ -20,7 +20,7 @@ desc users;
 select * from users;
 commit;
 
-create table books
+create table bookdetails
 (book_id int DEFAULT book_id.nextval,
 category VARCHAR2(100) NOT NULL,
 description VARCHAR(100),
@@ -32,11 +32,12 @@ publish_date date NOT NULL,
 condition VARCHAR2(100) NOT NULL,
 CONSTRAINT BOOK PRIMARY KEY(book_id));
 
-insert into books (category,description,publisher_id,book_title,book_code,price,publish_date,condition)values('Architecture','A fascinating, thought-provoking journey into our built environment',10,'The Great Indoors','B10',200,'10-12-2021','New');
-delete from books where book_id=1000;
+drop table bookdetails cascade constraints;
+insert into bookdetails(category,description,publisher_id,book_title,book_code,price,publish_date,condition)values('Architecture','A fascinating, thought-provoking journey into our built environment',10,'The Great Indoors','B10',200,'10-12-2021','New');
+delete from bookdetails where book_id=1000;
 create SEQUENCE book_id increment by 1 start with 1000;
-desc books;
-select * from books;
+desc bookdetails;
+select * from bookdetails;
 
 create table author_details
 (author_id int DEFAULT author_id.nextval,

@@ -8,13 +8,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.onlinebookshop.model.Products;
+import com.onlinebookshop.model.Bookdetails;
 
-public class ProductsDao {
+public class BookdetailsDao {
 	
-	public void insertBooks(Products product)
+	public void insertBooks(Bookdetails product)
 	{
-		String  insert="insert into books(category,description,publisher_id,book_title,book_code,price,publish_date,condition)values(?,?,?,?,?,?,?,?)";
+		String  insert="insert into bookdetails(category,description,publisher_id,book_title,book_code,price,publish_date,condition)values(?,?,?,?,?,?,?,?)";
 		Connection con = Connectionutil.getDbConnection();
 		PreparedStatement pstm=null;
 		try {
@@ -37,12 +37,15 @@ public class ProductsDao {
 		}
 	}
 	
-	public void deleteBooks(Products product) {
-		String delete="delete from books where book_title=?";
+	public void deleteBooks(String product) {
+		String delete="delete from bookdetails where book_title=?";
 		Connection con = Connectionutil.getDbConnection();
 		PreparedStatement pstm=null;
 		try {
 			pstm=con.prepareStatement(delete);
+			pstm.setString(1, product);
+			int noOfRows=pstm.executeUpdate();
+			System.out.println(noOfRows+ "row deleted");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,18 +53,18 @@ public class ProductsDao {
 		
 	}
 
-	public List<Products> showProduct()
+	public List<Bookdetails> showProduct()
 	{
-		List<Products> productsList=new ArrayList<Products>();
+		List<Bookdetails> productsList=new ArrayList<Bookdetails>();
 		
-		String show = "select * from books";
+		String show = "select * from bookdetails";
 		Connection con = Connectionutil.getDbConnection();
 		try {
 			Statement stm=con.createStatement();
 			ResultSet rs=stm.executeQuery(show);
 			while(rs.next())
 			{
-				Products product = new Products(rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(8),rs.getString(9));
+				Bookdetails product = new Bookdetails(rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(8),rs.getString(9));
 				productsList.add(product);
 			}
 		} catch (SQLException e) {
@@ -71,8 +74,8 @@ public class ProductsDao {
 		
 		return productsList;
 	}
-	public int findProduct(Products product) {
-		String find="select book_id from books where book_title='"+product.getBook_title()+"'";
+	public int findProduct(Bookdetails product) {
+		String find="select book_id from bookdetails where book_title='"+product.getBook_title()+"'";
 		Connection con = Connectionutil.getDbConnection();
 		int productId=0;
 		try {
@@ -88,5 +91,21 @@ public class ProductsDao {
 		}
 		return productId;
 		
+	}
+	public void updateBooks(String updateBooks) {
+		String updateQuery="update bookdetails set condition=? where book_title=?";
+		Connection con = Connectionutil.getDbConnection();
+		System.out.println("Connection sucessfull");
+		try {
+			PreparedStatement pst=con.prepareStatement(updateQuery);
+			pst.setString(1, updateBooks.split(",")[0]);
+			pst.setString(2, updateBooks.split(",")[1]);
+			int i=pst.executeUpdate();
+			System.out.println(i+"row updated");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Try again");
+		}
 	}
 }

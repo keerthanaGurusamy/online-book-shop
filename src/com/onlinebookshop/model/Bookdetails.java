@@ -2,7 +2,7 @@ package com.onlinebookshop.model;
 
 import java.util.Objects;
 
-public class Products {
+public class Bookdetails {
 
 	private String category;
 	private String description;
@@ -60,11 +60,11 @@ public class Products {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-	public Products() {
+	public Bookdetails() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Products(String category, String description, int publisher_id, String book_title, String book_code,
+	public Bookdetails(String category, String description, int publisher_id, String book_title, String book_code,
 			int price, String publish_date, String condition) {
 		super();
 		this.category = category;
@@ -94,7 +94,7 @@ public class Products {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Products other = (Products) obj;
+		Bookdetails other = (Bookdetails) obj;
 		return Objects.equals(book_code, other.book_code) && Objects.equals(book_title, other.book_title)
 				&& Objects.equals(category, other.category) && Objects.equals(condition, other.condition)
 				&& Objects.equals(description, other.description) && price == other.price
