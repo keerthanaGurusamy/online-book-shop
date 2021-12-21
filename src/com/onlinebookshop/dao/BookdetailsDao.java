@@ -74,16 +74,16 @@ public class BookdetailsDao {
 		
 		return productsList;
 	}
-	public int findProduct(Bookdetails product) {
-		String find="select book_id from bookdetails where book_title='"+product.getBook_title()+"'";
+	public String findProduct(String book_title) {
+		String find="select category from bookdetails where book_title='"+book_title+"'";
 		Connection con = Connectionutil.getDbConnection();
-		int productId=0;
+		String productId=null;
 		try {
 			Statement stm =con.createStatement();
 			ResultSet rs=stm.executeQuery(find);
 			if(rs.next())
 			{
-				productId=rs.getInt(1);
+				productId=rs.getString(2);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

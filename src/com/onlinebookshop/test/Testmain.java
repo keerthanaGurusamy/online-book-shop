@@ -265,12 +265,14 @@ public class Testmain {
 							price, publish_date, condition);
 					prodao.insertBooks(product);
 					break;
+					//Delete Books
 				case 3:
 					prodao=new BookdetailsDao();
 					System.out.print("Enter books to delete");
 					String delete=scan.nextLine();
 					prodao.deleteBooks(delete);
 					break;
+					//Update Books
 				case 4:
 					prodao=new BookdetailsDao();
 					System.out.print("Enter update details ");
@@ -283,7 +285,7 @@ public class Testmain {
 				else if(currentUser!=null) {
 				System.out.println("Welcome\t"+currentUser.getName());
 				flag=1;
-				System.out.println("\n1.Show Products\n2.update details\n3.Delete Profile\n4.Find user ID");
+				System.out.println("\n1.Show Products\n2.update details\n3.Delete Profile\n4.Find user ID\n5.Find product");
 			    int userChoice=Integer.parseInt(scan.nextLine());
 			    
 			    switch(userChoice)
@@ -291,8 +293,8 @@ public class Testmain {
 			    //Show Products
 			    case 1:
 			    
-			    BookdetailsDao proDao=new BookdetailsDao();
-			    List<Bookdetails> l_pro =proDao.showProduct();
+			    BookdetailsDao prodao=new BookdetailsDao();
+			    List<Bookdetails> l_pro =prodao.showProduct();
 				for(int i=0;i<l_pro.size();i++)
 				{
 					System.out.println(l_pro.get(i));
@@ -311,17 +313,25 @@ public class Testmain {
 					System.out.println("Enter delete Details");
 					String delete=scan.nextLine();
 					userDao.deletedDetails(delete);
-						
+					//find userId	
 			    case 4:
 			    	userDao=new UserDao();
 			    	System.out.println("Enter email id :");
 			    	String emailId =scan.nextLine();
 			    	int id =userDao.findUserId(emailId);
 			    	System.out.println("Customer id :"+ id);
+			    case 5:
+			    	prodao=new BookdetailsDao();
+			    	System.out.println("Enter book title ");
+			    	String find=scan.nextLine();
+			    	String books=prodao.findProduct(find);
+			    	System.out.println("book details "+books);
+			    	
 			    }		
 			}
 			else
 				flag=0;
+			    break;
 			}while(flag==0);
 		
 				

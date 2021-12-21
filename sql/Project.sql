@@ -38,7 +38,7 @@ delete from bookdetails where book_id=1000;
 create SEQUENCE book_id increment by 1 start with 1000;
 desc bookdetails;
 select * from bookdetails;
-
+commit;
 create table author_details
 (author_id int DEFAULT author_id.nextval,
 name VARCHAR2(50) NOT NULL,
