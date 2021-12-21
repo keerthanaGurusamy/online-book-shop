@@ -1,4 +1,4 @@
-create table users
+create table user_details
 (cus_id int Default cus_id.nextval,
 name VARCHAR2(50) NOT NULL,
 phoneNo NUMBER NOT NULL,
@@ -8,16 +8,17 @@ email_id VARCHAR2(30)NOT NULL,
 password VARCHAR2(30)NOT NULL,
 CONSTRAINT cus PRIMARY KEY(cus_id),UNIQUE(email_id),UNIQUE(phoneNo));
 
-insert into users (name,phoneNo,role,address,email_id,password) values('keerthi','9345257036','admin','Mylapore,chennai,600019','keke052000@gmail.com','keke0502');
-insert into users (name,phoneNo,role,address,email_id,password) values('keerthiga','9345257096','admin','Mylapore,chennai,600019','keke05@gmail.com','keke05020');
-insert into users (name,phoneNo,role,address,email_id,password) values('keerthaan','9345250036','admin','Mylapore,chennai,600019','keerthi02@gmail.com','keerthi05');
+insert into user_details (name,phoneNo,role,address,email_id,password) values('karthick','9345257036','admin','Mylapore,chennai,600019','karthick30@gmail.com','karthick30');
+insert into user_details (name,phoneNo,role,address,email_id,password) values('keerthi','9345257096','admin','Mylapore,chennai,600019','keke05@gmail.com','keke05020');
+insert into user_details (name,phoneNo,role,address,email_id,password) values('uma','9345250036','admin','Mylapore,chennai,600019','keerthi02@gmail.com','keerthi05');
 
 drop table users cascade constraints;
 commit;
 create sequence cus_id increment by 1 start with 100;
 DROP SEQUENCE CUS_ID;
 desc users;
-select * from users;
+select * from user_details; 
+delete from user_details where name='karthick';
 commit;
 
 create table bookdetails
@@ -39,6 +40,7 @@ create SEQUENCE book_id increment by 1 start with 1000;
 desc bookdetails;
 select * from bookdetails;
 commit;
+
 create table author_details
 (author_id int DEFAULT author_id.nextval,
 name VARCHAR2(50) NOT NULL,
@@ -51,7 +53,7 @@ UNIQUE(email_id));
 drop table author_details cascade constraints;
 create SEQUENCE author_id increment by 1 start with 2000;
 desc author_details;
-
+select * from author_details;
 create table cart
 (order_id int DEFAULT ORDER_ID.nextval ,
 book_id int,

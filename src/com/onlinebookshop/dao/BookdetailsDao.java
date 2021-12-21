@@ -92,14 +92,13 @@ public class BookdetailsDao {
 		return productId;
 		
 	}
-	public void updateBooks(String updateBooks) {
-		String updateQuery="update bookdetails set condition=? where book_title=?";
+	public void updateBooks(int price,String book_title) {
+		String updateQuery="update bookdetails set price=? where book_title=?";
 		Connection con = Connectionutil.getDbConnection();
-		System.out.println("Connection sucessfull");
 		try {
 			PreparedStatement pst=con.prepareStatement(updateQuery);
-			pst.setString(1, updateBooks.split(",")[0]);
-			pst.setString(2, updateBooks.split(",")[1]);
+			pst.setString(2, book_title);
+			pst.setInt(1, price);
 			int i=pst.executeUpdate();
 			System.out.println(i+"row updated");
 		} catch (SQLException e) {

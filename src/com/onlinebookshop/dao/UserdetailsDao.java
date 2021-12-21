@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.onlinebookshop.model.Bookdetails;
-import com.onlinebookshop.model.User;
+import com.onlinebookshop.model.Userdetails;
 
-public class UserDao {
+public class UserdetailsDao {
 
 	private static final String update = null;
 
-	public void insertUser(User user) {
-		String insertQuery = "insert into users(name,phoneNo,address,email_id,password) values(?,?,?,?,?)";
+	public void insertUser(Userdetails user) {
+		String insertQuery = "insert into user_details(name,phoneNo,address,email_id,password) values(?,?,?,?,?)";
 
 		Connectionutil conUtil = new Connectionutil();
 		Connection con = conUtil.getDbConnection();
@@ -38,18 +38,18 @@ public class UserDao {
 		}
 	}
 	//admin
-	public User admin(String email_id,String password)
+	public Userdetails admin(String email_id,String password)
 	{
-		String AdminQuery="select * from users where role='admin'and email_id='"+email_id+"'and password='"+password+"'";
+		String AdminQuery="select * from user_details where role='admin'and email_id='"+email_id+"'and password='"+password+"'";
 		
 		Connection con=Connectionutil.getDbConnection();
-		User user=null;
+		Userdetails user=null;
 		try {
 			Statement stm =con.createStatement();
 			ResultSet rs=stm.executeQuery(AdminQuery);
 			if(rs.next())
 			{
-				 user=new User(rs.getString(2),rs.getLong(3),rs.getString(5),email_id, password);
+				 user=new Userdetails(rs.getString(2),rs.getLong(3),rs.getString(5),email_id, password);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -58,17 +58,17 @@ public class UserDao {
 		return user;
 	}
 	//user
-	public User validateUser(String email_id,String password)
+	public Userdetails validateUser(String email_id,String password)
 	{
-		String validateQuery="select * from users where email_id='"+email_id+"' and password='"+password+"'";
+		String validateQuery="select * from user_details where email_id='"+email_id+"' and password='"+password+"'";
 		Connection con=Connectionutil.getDbConnection();
-		User user=null;
+		Userdetails user=null;
 		try {
 			Statement stm=con.createStatement();
 			ResultSet rs=stm.executeQuery(validateQuery);
 			if(rs.next())
 			{
-				user=new User(rs.getString(2),rs.getLong(3),rs.getString(4),email_id, password);
+				user=new Userdetails(rs.getString(2),rs.getLong(3),rs.getString(4),email_id, password);
 			}
 			else {
 				System.out.println("Not a valid user");
@@ -81,15 +81,13 @@ public class UserDao {
 		return user;
 	}
 	// update profile
-	public void update(String update) {
-		String updateQuery="update users set password=? where email_id=?";
+	public void update(String email_id,String password) {
+		String updateQuery="update user_details set password=? where email_id=?";
 		Connection con = Connectionutil.getDbConnection();
-		System.out.println("Connection sucessfull");
-		
 		try {
 			PreparedStatement pst=con.prepareStatement(updateQuery);
-			pst.setString(1, update.split(",")[0]);
-			pst.setString(2,update.split(",")[1]);
+			pst.setString(2, email_id);
+			pst.setString(1,password);
 			int i=pst.executeUpdate();
 			System.out.println(i+"row updated");
 			pst.close();
@@ -106,7 +104,7 @@ public class UserDao {
 	//Delete user details
 	
 	public void deletedDetails(String delete) {
-		String deleteQuery="delete from users where email_id=?";
+		String deleteQuery="delete from user_details where email_id=?";
 		Connection con=Connectionutil.getDbConnection();
 		System.out.println("Connection Sucessfull");
 		try {
@@ -122,15 +120,15 @@ public class UserDao {
 		
 	}
 	
-	public List<User> viewUser(){
-		List<User> userList=new ArrayList<User>();
-		String show="select * from users where role='user'";
+	public List<Userdetails> viewUser(){
+		List<Userdetails> userList=new ArrayList<Userdetails>();
+		String show="select * from user_details where role='user'";
 		Connection con=Connectionutil.getDbConnection();
 		try {
 			Statement stm=con.createStatement();
 			ResultSet rs=stm.executeQuery(show);
 			while(rs.next()) {
-				User user=new User(rs.getString(2),rs.getLong(3),rs.getString(5),rs.getString(6),rs.getString(7));
+				Userdetails user=new Userdetails(rs.getString(2),rs.getLong(3),rs.getString(5),rs.getString(6),rs.getString(7));
 				userList.add(user);
 			}
 		} catch (SQLException e) {
@@ -142,7 +140,7 @@ public class UserDao {
 	
 	public int findUserId(String emailId)
 	{
-		String findUser="select cus_id from users where email_id='"+emailId+"'";
+		String findUser="select cus_id from user_details where email_id='"+emailId+"'";
 		Connection con=Connectionutil.getDbConnection();
         int CusId=0;
         try {

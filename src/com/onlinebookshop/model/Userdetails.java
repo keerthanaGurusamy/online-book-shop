@@ -2,7 +2,7 @@ package com.onlinebookshop.model;
 
 import java.util.Objects;
 
-public class User {
+public class Userdetails {
 
 	private String name;
 	private long phoneNo;
@@ -50,12 +50,12 @@ public class User {
 		this.password = password;
 	}
 
-	public User() {
+	public Userdetails() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String name, long phoneNo, String address, String email_id, String password) {
+	public Userdetails(String name, long phoneNo, String address, String email_id, String password) {
 		super();
 		this.name = name;
 		this.phoneNo = phoneNo;
@@ -83,7 +83,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Userdetails other = (Userdetails) obj;
 		return Objects.equals(address, other.address) && Objects.equals(email_id, other.email_id)
 				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
 				&& phoneNo == other.phoneNo;
