@@ -74,16 +74,16 @@ public class BookdetailsDao {
 		
 		return productsList;
 	}
-	public String findProduct(String book_title) {
-		String find="select category from bookdetails where book_title='"+book_title+"'";
+	public int findProductid(String book_title) {
+		String find="select book_id from bookdetails where book_title='"+book_title+"'";
 		Connection con = Connectionutil.getDbConnection();
-		String productId=null;
+		int productId =0;
 		try {
 			Statement stm =con.createStatement();
 			ResultSet rs=stm.executeQuery(find);
 			if(rs.next())
 			{
-				productId=rs.getString(2);
+				productId=rs.getInt(1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -92,6 +92,26 @@ public class BookdetailsDao {
 		return productId;
 		
 	}
+	
+	public int findPrice(int proid) {
+		String query="select price from bookdetails where book_id='"+proid+"'";
+		Connection con=Connectionutil.getDbConnection();
+		Statement stmt;
+		int price=0;
+		try {
+			stmt=con.createStatement();
+			ResultSet rs=stmt.executeQuery(query);
+			if(rs.next())
+			{
+				price=rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return price;
+	}
+	
 	public void updateBooks(int price,String book_title) {
 		String updateQuery="update bookdetails set price=? where book_title=?";
 		Connection con = Connectionutil.getDbConnection();

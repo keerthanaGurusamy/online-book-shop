@@ -5,9 +5,11 @@ import java.util.Scanner;
 
 import com.onlinebookshop.dao.AuthorDetailsDao;
 import com.onlinebookshop.dao.BookdetailsDao;
+import com.onlinebookshop.dao.CartDao;
 import com.onlinebookshop.dao.UserdetailsDao;
 import com.onlinebookshop.model.AuthorDetails;
 import com.onlinebookshop.model.Bookdetails;
+import com.onlinebookshop.model.Cart;
 import com.onlinebookshop.model.Userdetails;
 
 public class Testmain {
@@ -22,50 +24,48 @@ public class Testmain {
 		UserdetailsDao userDao = null;
 		switch (choice) {
 		case 1:
-
 			userDao = new UserdetailsDao();
-
 			// name
-			System.out.print("Enter user Name:");
+			System.out.print("Enter user Name:");     
 			String name = scan.nextLine();
 			int flag = 0;
 			do {
-				if (name.matches("[A-Za-z]{5,}")) {
+				if (name.matches("[A-Za-z]{5,}")) 
+				{
 					flag = 0;
 					break;
 				} else
 					System.out.println("Enter valid name ");
-				name = scan.nextLine();
-				flag = 1;
+				    name = scan.nextLine();
+				    flag = 1;
 			} while (flag == 1);
-
 			// phone number
 			System.out.print("Enter Phone Number:");
 			String phno = scan.nextLine();
 			do {
-				if (phno.matches("[6-9][0-9]{9}")) {
+				if (phno.matches("[6-9][0-9]{9}")) 
+				{
 					flag = 0;
 					break;
 				} else
 					System.out.println("Enter valid Phone no:");
-				phno = scan.nextLine();
-				flag = 1;
+				    phno = scan.nextLine();
+				    flag = 1;
 			} while (flag == 1);
 			long phoneNo = Long.parseLong(phno);
-
 			// Address
-			System.out.print("Enter address");
+			System.out.print("Enter address:");
 			String address = scan.nextLine();
 			do {
-				if (address.matches("[A-Za-z0-9]{4,}+[,][A-Za-z]{4,}+[,][0-9]{6}+{20,}")) {
+				if (address.matches("[A-Za-z0-9]{4,}+[,][A-Za-z]{4,}+[,][0-9]{6}+{20,}")) 
+				{
 					flag = 0;
 					break;
 				} else
 					System.out.println("Enter valid address");
-				address = scan.nextLine();
-				flag = 1;
+				    address = scan.nextLine();
+				    flag = 1;
 			} while (flag == 1);
-
 			// Email ID
 			System.out.print("Enter email ID:");
 			String email = scan.nextLine();
@@ -75,10 +75,9 @@ public class Testmain {
 					break;
 				} else
 					System.out.println("Enter valid email ");
-				email = scan.nextLine();
-				flag = 1;
+				    email = scan.nextLine();
+				    flag = 1;
 			} while (flag == 1);
-
 			// Password
 			System.out.print("Enter password:");
 			String password = scan.nextLine();
@@ -88,8 +87,8 @@ public class Testmain {
 					break;
 				} else
 					System.out.println("Enter valid password pattern");
-				password = scan.nextLine();
-				flag = 1;
+				    password = scan.nextLine();
+				    flag = 1;
 			} while (flag == 1);
 			Userdetails user = new Userdetails(name, phoneNo, address, email, password);
 			userDao.insertUser(user);
@@ -106,8 +105,8 @@ public class Testmain {
 					break;
 				} else
 					System.out.println("Enter valid email ");
-				email = scan.nextLine();
-				flag = 1;
+				    email = scan.nextLine();
+				    flag = 1;
 			} while (flag == 1);
 			System.out.print("Enter password: ");
 			password = scan.nextLine();
@@ -117,8 +116,8 @@ public class Testmain {
 					break;
 				} else
 					System.out.println("Enter valid password ");
-				password = scan.nextLine();
-				flag = 1;
+				    password = scan.nextLine();
+				    flag = 1;
 			} while (flag == 1);
 			do {
 				Userdetails currentUser = userDao.validateUser(email_id, password);
@@ -130,23 +129,20 @@ public class Testmain {
 							"\n1.view users\n2.Delete users\n3.Add Books\n4.Delete Books\n5.Update books\n6.Add authors\n7.update authors\n8.Show authors\nEnter your choice");
 					int choices = Integer.parseInt(scan.nextLine());
 					switch (choices) {
-					// Show All users
-					case 1:
+					case 1:                                                                            					// Show All users
 						userDao = new UserdetailsDao();
 						List<Userdetails> userList = userDao.viewUser();
 						for (int i = 0; i < userList.size(); i++) {
 							System.out.println(userList.get(i));
 						}
 						break;
-					// DELETE User DETAILS
-					case 2:
-
+					case 2:                                                                                             // DELETE User DETAILS
 						userDao = new UserdetailsDao();
 						System.out.println("Enter delete Details");
 						String deleteuser = scan.nextLine();
 						userDao.deletedDetails(deleteuser);
-						// Add Books
-					case 3:
+						break;
+					case 3:                                                                                             // Add Books
 						System.out.print("Category :");
 						String category = scan.nextLine();
 						do {
@@ -251,16 +247,13 @@ public class Testmain {
 								book_code, price, publish_date, condition);
 						prodao.insertBooks(product);
 						break;
-					
-					// Delete Books
-					case 4:
+					case 4:                                                                                // Delete Books
 						prodao = new BookdetailsDao();
 						System.out.print("Enter books to delete");
 						String deletebooks = scan.nextLine();
 						prodao.deleteBooks(deletebooks);
 						break;
-					// Update Books
-					case 5:
+					case 5:                                                                               // Update Books
 						prodao = new BookdetailsDao();
 						System.out.print("Enter book_title to update details ");
 						String bookstitle = scan.nextLine();
@@ -268,20 +261,48 @@ public class Testmain {
 						int price1 = scan.nextInt();
 						prodao.updateBooks(price1, bookstitle);
 						break;
-					//Author insert
-					case 6:
+					case 6:                                                                                //Author insert
 						System.out.print("Enter author name :");
 						String author=scan.nextLine();
+						
+						do {
+							if (author.matches("[A-Za-z]{5,}")) 
+							{
+								flag = 0;
+								break;
+							} else
+								System.out.println("Enter valid name ");
+							    author = scan.nextLine();
+							    flag = 1;
+						} while (flag == 1);
 						System.out.print("Enter email_id :");
 						String emailId=scan.nextLine();
+						do {
+							if (emailId.matches("[a-z0-9]+[@][a-z]+[.][a-z]+{8,15}")) {
+								flag = 0;
+								break;
+							} else
+								System.out.println("Enter valid email ");
+							    emailId = scan.nextLine();
+							    flag = 1;
+						} while (flag == 1);
 						System.out.print("Enter Book id :");
 						String bookid=scan.nextLine();
+						do {
+							if (bookid.matches("[0-9]{2,5}")) {
+								flag = 0;
+								break;
+							} else {
+								System.out.println("Enter valid Book_id : ");
+								bookid = scan.nextLine();
+								flag = 1;
+							}
+						} while (flag == 1);
 						AuthorDetailsDao authordao=new AuthorDetailsDao();
 						AuthorDetails authordetails=new AuthorDetails(author,emailId,bookid);
 						authordao.insertAuthor(authordetails);
 						break;
-					//Author Update
-					case 7:
+					case 7:                                                                                 //Author Update
 						authordao = new AuthorDetailsDao();
 						System.out.print("Enter author name to update :");
 						String authorname=scan.nextLine();
@@ -289,8 +310,7 @@ public class Testmain {
 						String authoremail=scan.nextLine();
 						authordao.updateAuthor(authoremail, authorname);
 						break;
-					//Show Authors
-					case 8:
+					case 8:                                                                                 //Show Authors
 						authordao = new AuthorDetailsDao();
 						List<AuthorDetails>  authorList = authordao.showAuthor();
 						for (int i = 0; i < authorList.size(); i++) {
@@ -308,46 +328,62 @@ public class Testmain {
 					int userChoice = Integer.parseInt(scan.nextLine());
 
 					switch (userChoice) {
-					// Show Products
-					case 1:
-
-						BookdetailsDao prodao = new BookdetailsDao();
+					
+					case 1:                                                                             // Show Products
+						BookdetailsDao prodao = null;
+						prodao = new BookdetailsDao();
 						List<Bookdetails> l_pro = prodao.showProduct();
 						for (int i = 0; i < l_pro.size(); i++) {
 							System.out.println(l_pro.get(i));
 						}
+						System.out.println("\n1.Order Product\n2.View Orders");
+						int orderChoice=Integer.parseInt(scan.nextLine());
+						
+						switch(orderChoice)
+						{
+					case 1:
+						
+							System.out.println("Enter the Product Name");
+							String proName=scan.nextLine();
+							int id=prodao.findProductid(proName);
+							System.out.println("Book ID"+id);
+							int price=prodao.findPrice(id);
+							
+							System.out.println("Enter no of Products needed");
+							int quantity=Integer.parseInt(scan.nextLine());
+							double totalprice=(double)(quantity*price);
+							Cart order=new Cart(id,quantity,totalprice);
+							CartDao cartDao=new CartDao();
+							cartDao.insertOrder(order);
+							break;
+							}
 						break;
-					// UPDATE Profile
-					case 2:
-
+					case 2:                                                                             // UPDATE Profile
 						System.out.println("Enter emailid to update password");
 						String emailid = scan.nextLine();
 						System.out.println("Enter password ");
 						String passWord = scan.nextLine();
 						userDao.update(email_id, passWord);
 						break;
-					case 3:
-						// DELETE user details
+					case 3:                                                                             // DELETE user details
 						userDao = new UserdetailsDao();
 						System.out.println("Enter delete Details");
 						String delete = scan.nextLine();
 						userDao.deletedDetails(delete);
-						// Find userId
 						break;
-					case 4:
+					case 4:                                                                            // Find userId
 						userDao = new UserdetailsDao();
-						System.out.println("Enter email id :");
+						System.out.print("Enter email id :");
 						String emailId = scan.nextLine();
 						int id = userDao.findUserId(emailId);
 						System.out.println("Customer id :" + id);
-						// Find Books
 						break;
-					case 5:
+					case 5:                                                                           // Find Books
 						prodao = new BookdetailsDao();
-						System.out.println("Enter book title ");
+						System.out.print("Enter book title ");
 						String find = scan.nextLine();
-						String books = prodao.findProduct(find);
-						System.out.println("book details " + books);
+						int books = prodao.findProductid(find);
+						System.out.println("book id is :" + books);
 						break;
 					}
 				} else
@@ -356,31 +392,34 @@ public class Testmain {
 			} while (flag == 0);
 
 			break;
-
-//				System.out.println("\n1.Order Product\n2.View Orders");
-//				int orderChoice=Integer.parseInt(scan.nextLine());
-//				switch(orderChoice)
-//				{
-//				case 1:
-//					do {
-//						for(int i=0;i<l_pro.size();i++)
-//							
-//						{
-//							System.out.println(l_pro.get(i));
-//						}
-//					System.out.println("Enter the Product Name");
-//					String proName=scan.nextLine();
-//					for(int i=0;i<l_pro.size();i++)
-//					{
-//							if(l_pro.get(i).getBook_code().equals(proName))
-//							{
-//								Products product=l_pro.get(i);
-//							}
-//					}
-//					System.out.println("Enter no of Products needed");
-//					int noOf=Integer.parseInt(scan.nextLine());
-//					
-//					}
+		case 3:
+			BookdetailsDao prodao = null;
+				System.out.println("\n1.Order Product\n2.View Orders");
+				int orderChoice=Integer.parseInt(scan.nextLine());
+				CartDao cartDao=null;
+				switch(orderChoice)
+				{
+				case 1:
+						
+						prodao = new BookdetailsDao();
+						List<Bookdetails> l_pro = prodao.showProduct();
+						for (int i = 0; i < l_pro.size(); i++) 
+						{
+							System.out.println(l_pro.get(i));
+						}	
+					System.out.println("Enter the Product Name");
+					String proName=scan.nextLine();
+					int id=prodao.findProductid(proName);
+					System.out.println("Book ID"+id);
+					int price=prodao.findPrice(id);
+					
+					System.out.println("Enter no of Products needed");
+					int quantity=Integer.parseInt(scan.nextLine());
+					double totalprice=(double)(quantity*price);
+					Cart order=new Cart(id,quantity,totalprice);
+					cartDao.insertOrder(order);
+					break;
+					}
 
 		}
 	}
