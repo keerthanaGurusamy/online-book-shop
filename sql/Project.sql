@@ -39,6 +39,8 @@ delete from bookdetails where book_id=1000;
 create SEQUENCE book_id increment by 1 start with 1000;
 desc bookdetails;
 select * from bookdetails;
+select * from user_details;
+select * from cart;
 commit;
 
 create table author_details
@@ -54,25 +56,29 @@ drop table author_details cascade constraints;
 create SEQUENCE author_id increment by 1 start with 2000;
 desc author_details;
 select * from author_details;
+
 create table cart
-(order_id int DEFAULT ORDER_ID.nextval ,
-book_id int,
+(order_id int DEFAULT ORDER_ID.nextval,
+cus_id int not null,
+book_id int not null,
 quantity int NOT NULL,
 total_cost decimal NOT NULL,
 CONSTRAINT orders_id PRIMARY KEY(order_id),
-CONSTRAINT books_id FOREIGN KEY(book_id) REFERENCES books(book_id));
+CONSTRAINT customer_id FOREIGN KEY(cus_id) REFERENCES user_details(cus_id),
+CONSTRAINT books_id FOREIGN KEY(book_id) REFERENCES bookdetails(book_id));
 
 create SEQUENCE order_id increment by 1 start with 300;
 drop SEQUENCE order_id;
-drop table ordered_books cascade constraints;
+drop table orders cascade constraints;
+select * from cart;
 
 create table orders
 (order_id int,
 cus_id int,
 order_date TIMESTAMP default current_timestamp,
 status varchar2(50) NOT NULL,
-CONSTRAINT c_id FOREIGN KEY(cus_id) REFERENCES customer_register(cus_id),
-CONSTRAINT o_id FOREIGN KEY(order_id) REFERENCES order_books(order_id));
+CONSTRAINT c_id FOREIGN KEY(cus_id) REFERENCES user_details(cus_id),
+CONSTRAINT o_id FOREIGN KEY(order_id) REFERENCES cart(order_id));
 
 
 

@@ -336,13 +336,22 @@ public class Testmain {
 						for (int i = 0; i < l_pro.size(); i++) {
 							System.out.println(l_pro.get(i));
 						}
-						System.out.println("\n1.Order Product\n2.View Orders");
+						
+						System.out.println("\n1.Order Product\n2.View Orders\n3.update cart\n4.delete cart");
 						int orderChoice=Integer.parseInt(scan.nextLine());
 						
 						switch(orderChoice)
 						{
-					case 1:
-						
+					   case 1:
+						    String userName=currentUser.getEmail_id();
+							int id1=userDao.findUserId(userName);
+							System.out.println("user"+id1);
+							prodao = new BookdetailsDao();
+							List<Bookdetails> list_pro = prodao.showProduct();
+							for (int i = 0; i < list_pro.size(); i++) 
+							{
+								System.out.println(list_pro.get(i));
+							}	
 							System.out.println("Enter the Product Name");
 							String proName=scan.nextLine();
 							int id=prodao.findProductid(proName);
@@ -352,13 +361,38 @@ public class Testmain {
 							System.out.println("Enter no of Products needed");
 							int quantity=Integer.parseInt(scan.nextLine());
 							double totalprice=(double)(quantity*price);
-							Cart order=new Cart(id,quantity,totalprice);
-							CartDao cartDao=new CartDao();
+							Cart order=new Cart(id,id1,quantity,totalprice);
+							 CartDao cartDao=new CartDao();
 							cartDao.insertOrder(order);
 							break;
+					   case 2:       // View Cart
+						   CartDao cart=new CartDao();
+						   List<Cart> cart_list = cart.viewCart();
+						   for (int i = 0; i < cart_list.size(); i++) {
+								System.out.println(cart_list.get(i));
 							}
+						   break;
+					   case 3:      //Update cart Quantity
+						   cart=new CartDao();
+						   System.out.println("Enter the Product name");
+						   String proname=scan.nextLine();
+						   int proid=prodao.findProductid(proname);
+						   System.out.println("Book ID"+proid);
+						   System.out.println("Enter quantity");
+						   int updatequantity=scan.nextInt();
+						   int cartquantity=cart.updateCart(updatequantity, proid);
+						   break;
+					   case 4:
+						    cart = new CartDao();
+							System.out.print("Enter books to delete");
+							String deletebooks = scan.nextLine();
+							int bookid=prodao.findProductid(deletebooks);
+							System.out.println("Book ID"+bookid);
+							int cardelete =cart.deleteCart(bookid);
+							break;
+						 }
 						break;
-					case 2:                                                                             // UPDATE Profile
+					case 2:                                                                            // UPDATE Profile
 						System.out.println("Enter emailid to update password");
 						String emailid = scan.nextLine();
 						System.out.println("Enter password ");
@@ -392,33 +426,33 @@ public class Testmain {
 			} while (flag == 0);
 
 			break;
-		case 3:
-			BookdetailsDao prodao = null;
-				System.out.println("\n1.Order Product\n2.View Orders");
-				int orderChoice=Integer.parseInt(scan.nextLine());
-				CartDao cartDao=null;
-				switch(orderChoice)
-				{
-				case 1:
-						
-						prodao = new BookdetailsDao();
-						List<Bookdetails> l_pro = prodao.showProduct();
-						for (int i = 0; i < l_pro.size(); i++) 
-						{
-							System.out.println(l_pro.get(i));
-						}	
-					System.out.println("Enter the Product Name");
-					String proName=scan.nextLine();
-					int id=prodao.findProductid(proName);
-					System.out.println("Book ID"+id);
-					int price=prodao.findPrice(id);
-					
-					System.out.println("Enter no of Products needed");
-					int quantity=Integer.parseInt(scan.nextLine());
-					double totalprice=(double)(quantity*price);
-					Cart order=new Cart(id,quantity,totalprice);
-					cartDao.insertOrder(order);
-					break;
+//		case 3:
+//			BookdetailsDao prodao = null;
+//				System.out.println("\n1.Order Product\n2.View Orders");
+//				int orderChoice=Integer.parseInt(scan.nextLine());
+//				CartDao cartDao=null;
+//				switch(orderChoice)
+//				{
+//				case 1:
+//						
+//						prodao = new BookdetailsDao();
+//						List<Bookdetails> l_pro = prodao.showProduct();
+//						for (int i = 0; i < l_pro.size(); i++) 
+//						{
+//							System.out.println(l_pro.get(i));
+//						}	
+//					System.out.println("Enter the Product Name");
+//					String proName=scan.nextLine();
+//					int id=prodao.findProductid(proName);
+//					System.out.println("Book ID"+id);
+//					int price=prodao.findPrice(id);
+//					
+//					System.out.println("Enter no of Products needed");
+//					int quantity=Integer.parseInt(scan.nextLine());
+//					double totalprice=(double)(quantity*price);
+//					Cart order=new Cart(id,quantity,totalprice);
+//					cartDao.insertOrder(order);
+//					break;
 					}
 
 		}

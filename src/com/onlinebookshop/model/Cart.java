@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Cart {
 
 	private int book_id;
+	private int cus_id;
 	private int quantity;
 	private double total_cost;
 	public int getBook_id() {
@@ -12,6 +13,12 @@ public class Cart {
 	}
 	public void setBook_id(int book_id) {
 		this.book_id = book_id;
+	}
+	public int getCus_id() {
+		return cus_id;
+	}
+	public void setCus_id(int cus_id) {
+		this.cus_id = cus_id;
 	}
 	public int getQuantity() {
 		return quantity;
@@ -29,19 +36,21 @@ public class Cart {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Cart(int book_id, int quantity, double total_cost) {
+	public Cart(int book_id, int cus_id, int quantity, double total_cost) {
 		super();
 		this.book_id = book_id;
+		this.cus_id = cus_id;
 		this.quantity = quantity;
 		this.total_cost = total_cost;
 	}
 	@Override
 	public String toString() {
-		return "Cart [book_id=" + book_id + ", quantity=" + quantity + ", total_cost=" + total_cost + "]";
+		return "Cart [book_id=" + book_id + ", cus_id=" + cus_id + ", quantity=" + quantity + ", total_cost="
+				+ total_cost + "]";
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(book_id, quantity, total_cost);
+		return Objects.hash(book_id, cus_id, quantity, total_cost);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -52,7 +61,8 @@ public class Cart {
 		if (getClass() != obj.getClass())
 			return false;
 		Cart other = (Cart) obj;
-		return book_id == other.book_id && quantity == other.quantity
+		return book_id == other.book_id && cus_id == other.cus_id && quantity == other.quantity
 				&& Double.doubleToLongBits(total_cost) == Double.doubleToLongBits(other.total_cost);
 	}
+	
 }
