@@ -127,4 +127,44 @@ public class BookdetailsDao {
 			System.out.println("Try again");
 		}
 	}
+	
+	public List<Bookdetails> filterPrice() {
+		List<Bookdetails> filterList=new ArrayList<Bookdetails>();
+		String filter="select * from bookdetails where price >100 ";
+		Connection con = Connectionutil.getDbConnection();
+		try {
+			Statement stm=con.createStatement();
+			ResultSet rs=stm.executeQuery(filter);
+			while(rs.next())
+			{
+				Bookdetails product = new Bookdetails(rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(8),rs.getString(9));
+				filterList.add(product);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return filterList;
+	}
+	
+	public List<Bookdetails> filterCondition() {
+		List<Bookdetails> conditionList=new ArrayList<Bookdetails>();
+		String condition="select * from bookdetails where condition='Old' ";
+		Connection con = Connectionutil.getDbConnection();
+		try {
+			Statement stm=con.createStatement();
+			ResultSet rs=stm.executeQuery(condition);
+			while(rs.next())
+			{
+				Bookdetails product = new Bookdetails(rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(8),rs.getString(9));
+				conditionList.add(product);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("no records");
+		}	
+		return conditionList;
+	}
+	
 }

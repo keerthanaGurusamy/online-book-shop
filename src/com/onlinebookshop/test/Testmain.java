@@ -15,7 +15,7 @@ import com.onlinebookshop.model.Userdetails;
 public class Testmain {
 
 	public static void main(String[] args) throws Exception {
-
+		
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\tWelcome to Online Book Shop");
 		System.out.println("\n1.Register\n2.Login\nEnter your Choice :");
@@ -126,7 +126,7 @@ public class Testmain {
 				if (validAdmin != null) {
 					System.out.println("Welcome admin");
 					System.out.println(
-							"\n1.view users\n2.Delete users\n3.Add Books\n4.Delete Books\n5.Update books\n6.Add authors\n7.update authors\n8.Show authors\n9.Find user id\n10.Find product id\nEnter your choice");
+							"\n1.view users\n2.Delete users\n3.Add Books\n4.Delete Books\n5.Update books\n6.Add authors\n7.update authors\n8.Show authors\n9.Find user id\n10.Find product id\n11.view cart\nEnter your choice");
 					int choices = Integer.parseInt(scan.nextLine());
 					switch (choices) {
 					case 1:                                                                       // Show All users
@@ -330,7 +330,13 @@ public class Testmain {
 						int books = prodao.findProductid(find);
 						System.out.println("book id is :" + books);
 						break;
-						
+					case 11:       // View Cart
+						 CartDao cart=new CartDao();
+						 List<Cart> cart_list = cart.viewCart();
+						 for (int i = 0; i < cart_list.size(); i++) {
+					   	System.out.println(cart_list.get(i));
+						}
+						 break;
 					}
 				}
 				// Customer Login
@@ -338,7 +344,7 @@ public class Testmain {
 					System.out.println("Welcome\t" + currentUser.getName());
 					flag = 1;
 					System.out.println(
-							"\n1.Show Products\n2.update Profile\n3.Delete Profile\nEnter your choice");
+							"\n1.Show Products\n2.update Profile\n3.Delete Profile\n4.filter by price\n5.Filter by condition\nEnter your choice");
 					int userChoice = Integer.parseInt(scan.nextLine());
 
 					switch (userChoice) {
@@ -351,7 +357,7 @@ public class Testmain {
 							System.out.println(l_pro.get(i));
 						}
 						
-						System.out.println("\n1.Order Product\n2.View Orders\n3.update cart\n4.delete cart\nEnter your choice");
+						System.out.println("\n1.Order Product\n2.update cart\n3.delete cart\nEnter your choice");
 						int orderChoice=Integer.parseInt(scan.nextLine());
 						
 						switch(orderChoice)
@@ -377,18 +383,12 @@ public class Testmain {
 							 CartDao cartDao=new CartDao();
 							cartDao.insertOrder(order);
 							}else {
-								System.out.println("invalid");
+								System.out.println("insufficient amount");
 							}
 							break;
 							
-					   case 2:       // View Cart
+					   case 2:      //Update cart Quantity
 						   CartDao cart=new CartDao();
-						   List<Cart> cart_list = cart.viewCart();
-						   for (int i = 0; i < cart_list.size(); i++) {
-								System.out.println(cart_list.get(i));
-							}
-						   break;
-					   case 3:      //Update cart Quantity
 						   cart=new CartDao();
 						   System.out.println("Enter the Product name");
 						   String proname=scan.nextLine();
@@ -398,7 +398,7 @@ public class Testmain {
 						   int updatequantity=scan.nextInt();
 						   int cartquantity=cart.updateCart(updatequantity, proid);
 						   break;
-					   case 4:
+					   case 3:
 						    cart = new CartDao();
 							System.out.print("Enter books to delete");
 							String deletebooks = scan.nextLine();
@@ -406,22 +406,34 @@ public class Testmain {
 							System.out.println("Book ID"+bookid);
 							int cardelete =cart.deleteCart(bookid);
 							break;
+					   
 						 }
 						break;
-					case 2:                                                                            // UPDATE Profile
+				case 2:                                                                            // UPDATE Profile
 						System.out.println("Enter emailid to update password");
 						String emailid = scan.nextLine();
 						System.out.println("Enter password ");
 						String passWord = scan.nextLine();
 						userDao.update(email_id, passWord);
 						break;
-					case 3:                                                                             // DELETE user details
+			   case 3:                                                                             // DELETE user details
 						userDao = new UserdetailsDao();
 						System.out.println("Enter delete Details");
 						String delete = scan.nextLine();
 						userDao.deletedDetails(delete);
 						break;
-					
+			  case 4:
+						prodao = new BookdetailsDao();
+						List<Bookdetails> List = prodao.filterPrice();
+						for (int i = 0; i < List.size(); i++) {
+							System.out.println(List.get(i));
+						}
+			 case 5:
+						prodao = new BookdetailsDao();
+						List<Bookdetails> conList = prodao.filterCondition();
+						for (int i = 0; i < conList.size(); i++) {
+							System.out.println(conList.get(i));
+						}
 					}
 				} else
 					flag = 0;
@@ -431,5 +443,5 @@ public class Testmain {
 			break;
 
 		}
-	}
+}
 }
