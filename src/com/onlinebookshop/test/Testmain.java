@@ -14,7 +14,7 @@ import com.onlinebookshop.model.Userdetails;
 
 public class Testmain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		Scanner scan = new Scanner(System.in);
 		System.out.println("\tWelcome to Online Book Shop");
@@ -126,23 +126,23 @@ public class Testmain {
 				if (validAdmin != null) {
 					System.out.println("Welcome admin");
 					System.out.println(
-							"\n1.view users\n2.Delete users\n3.Add Books\n4.Delete Books\n5.Update books\n6.Add authors\n7.update authors\n8.Show authors\nEnter your choice");
+							"\n1.view users\n2.Delete users\n3.Add Books\n4.Delete Books\n5.Update books\n6.Add authors\n7.update authors\n8.Show authors\n9.Find user id\n10.Find product id\nEnter your choice");
 					int choices = Integer.parseInt(scan.nextLine());
 					switch (choices) {
-					case 1:                                                                            					// Show All users
+					case 1:                                                                       // Show All users
 						userDao = new UserdetailsDao();
 						List<Userdetails> userList = userDao.viewUser();
 						for (int i = 0; i < userList.size(); i++) {
 							System.out.println(userList.get(i));
 						}
 						break;
-					case 2:                                                                                             // DELETE User DETAILS
+					case 2:                                                                        // DELETE User DETAILS
 						userDao = new UserdetailsDao();
 						System.out.println("Enter delete Details");
 						String deleteuser = scan.nextLine();
 						userDao.deletedDetails(deleteuser);
 						break;
-					case 3:                                                                                             // Add Books
+					case 3:                                                                         // Add Books
 						System.out.print("Category :");
 						String category = scan.nextLine();
 						do {
@@ -316,7 +316,21 @@ public class Testmain {
 						for (int i = 0; i < authorList.size(); i++) {
 							System.out.println(authorList.get(i));
 						}
+					case 9:                                                                         // Find userId
+						userDao = new UserdetailsDao();
+						System.out.print("Enter email id :");
+						String email_Id = scan.nextLine();
+						int id = userDao.findUserId(email_Id);
+						System.out.println("Customer id :" + id);
 						break;
+					case 10:                                                                           // Find Books
+						prodao = new BookdetailsDao();
+						System.out.print("Enter book title ");
+						String find = scan.nextLine();
+						int books = prodao.findProductid(find);
+						System.out.println("book id is :" + books);
+						break;
+						
 					}
 				}
 				// Customer Login
@@ -324,7 +338,7 @@ public class Testmain {
 					System.out.println("Welcome\t" + currentUser.getName());
 					flag = 1;
 					System.out.println(
-							"\n1.Show Products\n2.update Profile\n3.Delete Profile\n4.Find user ID\n5.Find product");
+							"\n1.Show Products\n2.update Profile\n3.Delete Profile\nEnter your choice");
 					int userChoice = Integer.parseInt(scan.nextLine());
 
 					switch (userChoice) {
@@ -337,7 +351,7 @@ public class Testmain {
 							System.out.println(l_pro.get(i));
 						}
 						
-						System.out.println("\n1.Order Product\n2.View Orders\n3.update cart\n4.delete cart");
+						System.out.println("\n1.Order Product\n2.View Orders\n3.update cart\n4.delete cart\nEnter your choice");
 						int orderChoice=Integer.parseInt(scan.nextLine());
 						
 						switch(orderChoice)
@@ -345,26 +359,28 @@ public class Testmain {
 					   case 1:
 						    String userName=currentUser.getEmail_id();
 							int id1=userDao.findUserId(userName);
-							System.out.println("user"+id1);
-							prodao = new BookdetailsDao();
-							List<Bookdetails> list_pro = prodao.showProduct();
-							for (int i = 0; i < list_pro.size(); i++) 
-							{
-								System.out.println(list_pro.get(i));
-							}	
-							System.out.println("Enter the Product Name");
+							System.out.println("user_id :"+id1);
+							
+							System.out.print("Enter the Product Name");
 							String proName=scan.nextLine();
 							int id=prodao.findProductid(proName);
-							System.out.println("Book ID"+id);
+							System.out.println("Book ID :"+id);
 							int price=prodao.findPrice(id);
 							
-							System.out.println("Enter no of Products needed");
+							System.out.print("Enter no of Products needed");
 							int quantity=Integer.parseInt(scan.nextLine());
 							double totalprice=(double)(quantity*price);
-							Cart order=new Cart(id,id1,quantity,totalprice);
+							int wallet =userDao.walletbal(id1);
+							
+							if(totalprice<=wallet) {
+							 Cart order=new Cart(id,id1,quantity,totalprice);
 							 CartDao cartDao=new CartDao();
 							cartDao.insertOrder(order);
+							}else {
+								System.out.println("invalid");
+							}
 							break;
+							
 					   case 2:       // View Cart
 						   CartDao cart=new CartDao();
 						   List<Cart> cart_list = cart.viewCart();
@@ -405,20 +421,7 @@ public class Testmain {
 						String delete = scan.nextLine();
 						userDao.deletedDetails(delete);
 						break;
-					case 4:                                                                            // Find userId
-						userDao = new UserdetailsDao();
-						System.out.print("Enter email id :");
-						String emailId = scan.nextLine();
-						int id = userDao.findUserId(emailId);
-						System.out.println("Customer id :" + id);
-						break;
-					case 5:                                                                           // Find Books
-						prodao = new BookdetailsDao();
-						System.out.print("Enter book title ");
-						String find = scan.nextLine();
-						int books = prodao.findProductid(find);
-						System.out.println("book id is :" + books);
-						break;
+					
 					}
 				} else
 					flag = 0;
@@ -426,34 +429,6 @@ public class Testmain {
 			} while (flag == 0);
 
 			break;
-//		case 3:
-//			BookdetailsDao prodao = null;
-//				System.out.println("\n1.Order Product\n2.View Orders");
-//				int orderChoice=Integer.parseInt(scan.nextLine());
-//				CartDao cartDao=null;
-//				switch(orderChoice)
-//				{
-//				case 1:
-//						
-//						prodao = new BookdetailsDao();
-//						List<Bookdetails> l_pro = prodao.showProduct();
-//						for (int i = 0; i < l_pro.size(); i++) 
-//						{
-//							System.out.println(l_pro.get(i));
-//						}	
-//					System.out.println("Enter the Product Name");
-//					String proName=scan.nextLine();
-//					int id=prodao.findProductid(proName);
-//					System.out.println("Book ID"+id);
-//					int price=prodao.findPrice(id);
-//					
-//					System.out.println("Enter no of Products needed");
-//					int quantity=Integer.parseInt(scan.nextLine());
-//					double totalprice=(double)(quantity*price);
-//					Cart order=new Cart(id,quantity,totalprice);
-//					cartDao.insertOrder(order);
-//					break;
-					}
 
 		}
 	}

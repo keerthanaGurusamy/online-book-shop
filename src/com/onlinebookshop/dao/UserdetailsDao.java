@@ -156,6 +156,19 @@ public class UserdetailsDao {
 		}
         return CusId;
 	}
+	
+	public int walletbal(int userid) throws Exception 
+	{
+		Connection con = Connectionutil.getDbConnection();
+		String query = "select wallet from user_details where cus_id = ?";
+		PreparedStatement statement = con.prepareStatement(query);
+		statement.setInt(1, userid);
+		ResultSet rs = statement.executeQuery();
+		while(rs.next()) {
+				return rs.getInt(1);
+		}
+		return -1;
+	}
 }
 	
 
