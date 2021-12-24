@@ -22,7 +22,7 @@ public class OrderDetailsDao {
 		    pst.executeUpdate();
 		    System.out.println("Value inserted sucessfully");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
