@@ -1,5 +1,6 @@
 package com.onlinebookshop.test;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -343,6 +344,8 @@ public class Testmain {
 				else if (currentUser != null) {
 					System.out.println("Welcome\t" + currentUser.getName());
 					flag = 1;
+					boolean flag1 = true;
+					while(flag1) {
 					System.out.println(
 							"\n1.Show Products\n2.update Profile\n3.Delete Profile\n4.filter by price\n5.Filter by condition\nEnter your choice");
 					int userChoice = Integer.parseInt(scan.nextLine());
@@ -375,15 +378,35 @@ public class Testmain {
 							
 							System.out.print("Enter no of Products needed");
 							int quantity=Integer.parseInt(scan.nextLine());
-							double totalprice=(double)(quantity*price);
+							System.out.println("1.confirm order" + "\n" +"2.Cancel Order" );
+							int cnfinp = scan.nextInt();
+							scan.nextLine();
+							switch(cnfinp) {
+							
+							case 1:
+							int totalprice=(quantity*price);
 							int wallet =userDao.walletbal(id1);
+							int dedwallbal = wallet - totalprice;
 							
 							if(totalprice<=wallet) {
 							 Cart order=new Cart(id,id1,quantity,totalprice);
 							 CartDao cartDao=new CartDao();
+							 
 							cartDao.insertOrder(order);
+							Userdetails userdetails = new Userdetails(id1,dedwallbal);
+						int upd = userDao.updatewall(userdetails);
+						if(upd > 0) {
+							flag1 = false;
+						
+							System.out.println("ordered sucessfully!!");
+						}
 							}else {
 								System.out.println("insufficient amount");
+							}
+							break;
+							
+							case 2:
+								break;
 							}
 							break;
 							
@@ -423,17 +446,28 @@ public class Testmain {
 						userDao.deletedDetails(delete);
 						break;
 			  case 4:
+				  System.out.println("ënter the price range");
+				  int pricerange = scan.nextInt();
+				  scan.nextLine();
 						prodao = new BookdetailsDao();
-						List<Bookdetails> List = prodao.filterPrice();
-						for (int i = 0; i < List.size(); i++) {
-							System.out.println(List.get(i));
+						ResultSet rs = prodao.filterPrice(pricerange);
+						while(rs.next())
+						{
+						//	Bookdetails product = new Bookdetails();
+							System.out.println(rs.getString(2)+rs.getString(3)+rs.getInt(4)+rs.getString(5)+rs.getString(6)+rs.getInt(7)+rs.getString(8)+rs.getString(9)+"");
 						}
+//						List<Bookdetails> List = prodao.filterPrice(pricerange);
+//						for (int i = 0; i < List.size(); i++) {
+//							System.out.println(List.get(i));
+//						}
+						break;
 			 case 5:
 						prodao = new BookdetailsDao();
 						List<Bookdetails> conList = prodao.filterCondition();
 						for (int i = 0; i < conList.size(); i++) {
 							System.out.println(conList.get(i));
 						}
+					}
 					}
 				} else
 					flag = 0;

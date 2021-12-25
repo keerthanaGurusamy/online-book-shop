@@ -7,13 +7,13 @@ create table user_details(cus_id int Default cus_id.nextval,
                          password VARCHAR2(30)NOT NULL,
                          wallet int Default '100000',
                          CONSTRAINT cus PRIMARY KEY(cus_id),UNIQUE(email_id),UNIQUE(phoneNo));
-
+select * from user_details;
 insert into user_details (name,phoneNo,role,address,email_id,password) values('karthick','9345257036','admin','Mylapore,chennai,600019','karthick30@gmail.com','karthick30');
 insert into user_details (name,phoneNo,role,address,email_id,password) values('keerthi','9345257096','admin','Mylapore,chennai,600019','keke05@gmail.com','keke05020');
 insert into user_details (name,phoneNo,role,address,email_id,password) values('uma','9345250036','admin','Mylapore,chennai,600019','keerthi02@gmail.com','keerthi05');
 
 update user_details SET wallet=0 where role='admin';
-drop table users cascade constraints;
+drop table user_details cascade constraints;
 commit;
 create sequence cus_id increment by 1 start with 100;
 DROP SEQUENCE CUS_ID;
@@ -79,7 +79,7 @@ select * from bookdetails;
 select * from cart;
 select * from user_details;
 select * from order_details;
-
+select * from bookdetails where price <= 100;
 commit;
 
 desc user_details;

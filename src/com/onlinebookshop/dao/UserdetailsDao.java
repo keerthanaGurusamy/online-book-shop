@@ -169,6 +169,16 @@ public class UserdetailsDao {
 		}
 		return -1;
 	}
+	//update wallet:
+	public int  updatewall(Userdetails userdetails)throws Exception {
+		Connection con = Connectionutil.getDbConnection();
+		String query = "update user_details set wallet = ? where cus_id = ?";
+		PreparedStatement statement = con.prepareStatement(query);
+		statement.setDouble(1, userdetails.getWallet());
+		statement.setInt(2,userdetails.getCus_id());
+		int res = statement.executeUpdate();
+		return res;
+	}
 }
 	
 

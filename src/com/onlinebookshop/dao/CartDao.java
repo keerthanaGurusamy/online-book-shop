@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.onlinebookshop.model.Cart;
+import com.onlinebookshop.model.Userdetails;
 
 public class CartDao {
 
@@ -85,6 +86,20 @@ public class CartDao {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public List<Cart> viewUserCart(Userdetails currentUser){
+		String myCart ="select * from cart where cus_id=?";
+		List<Cart> userCartList = new ArrayList<Cart>();
+		Connection con = Connectionutil.getDbConnection();
+		try {
+			PreparedStatement stm = con.prepareStatement(myCart);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userCartList;
 	}
 	
 }

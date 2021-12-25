@@ -9,6 +9,23 @@ public class Userdetails {
 	private String address;
 	private String email_id;
 	private String password;
+private int cus_id;
+private int wallet;
+	public int getCus_id() {
+	return cus_id;
+}
+
+public void setCus_id(int cus_id) {
+	this.cus_id = cus_id;
+}
+
+public int getWallet() {
+	return wallet;
+}
+
+public void setWallet(int wallet) {
+	this.wallet = wallet;
+}
 
 	public String getName() {
 		return name;
@@ -56,12 +73,20 @@ public class Userdetails {
 	}
 
 	public Userdetails(String name, long phoneNo, String address, String email_id, String password) {
-		super();
+		
 		this.name = name;
 		this.phoneNo = phoneNo;
 		this.address = address;
 		this.email_id = email_id;
 		this.password = password;
+	}
+	
+	
+
+	public Userdetails(int cus_id, int wallet) {
+		
+		this.cus_id = cus_id;
+		this.wallet = wallet;
 	}
 
 	@Override
