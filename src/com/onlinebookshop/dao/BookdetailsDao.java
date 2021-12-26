@@ -138,12 +138,6 @@ public class BookdetailsDao {
 			preparedStatement.setInt(1, price);
 			ResultSet rs = preparedStatement.executeQuery();
 			return rs;
-//			while(rs.next())
-//			{
-//				Bookdetails product = new Bookdetails(rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(8),rs.getString(9));
-//				filterList.add(product);
-//				System.out.println(product);
-//			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -171,20 +165,5 @@ public class BookdetailsDao {
 		return conditionList;
 	}
 	
-//	public void updateWallet(Userdetails user) {
-//		String update ="update user_details set wallet = (select wallet from user_details where cus_id=?)-? where cus_id=? and password=?";
-//	
-//		Connection con = Connectionutil.getDbConnection();
-//		try {
-//			Statement stm = con.createStatement();
-//			PreparedStatement pre =con.prepareStatement(update);
-//			pre.setInt(1, user.get);
-//			pre.setInt(2, );
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//	}
+
 }

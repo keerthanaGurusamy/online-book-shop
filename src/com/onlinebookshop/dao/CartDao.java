@@ -88,18 +88,20 @@ public class CartDao {
 		return 0;
 	}
 	
-	public List<Cart> viewUserCart(Userdetails currentUser){
+	public ResultSet viewUserCart(Userdetails currentUser){
 		String myCart ="select * from cart where cus_id=?";
-		List<Cart> userCartList = new ArrayList<Cart>();
+		
 		Connection con = Connectionutil.getDbConnection();
 		try {
-			PreparedStatement stm = con.prepareStatement(myCart);
-			
+			PreparedStatement pstm = con.prepareStatement(myCart);
+			pstm.setInt(1, currentUser.getCus_id());
+			ResultSet rs = pstm.executeQuery();
+			return rs;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return userCartList;
+		return null;
 	}
 	
 }

@@ -7,10 +7,12 @@ import java.util.Scanner;
 import com.onlinebookshop.dao.AuthorDetailsDao;
 import com.onlinebookshop.dao.BookdetailsDao;
 import com.onlinebookshop.dao.CartDao;
+import com.onlinebookshop.dao.Ratingdao;
 import com.onlinebookshop.dao.UserdetailsDao;
 import com.onlinebookshop.model.AuthorDetails;
 import com.onlinebookshop.model.Bookdetails;
 import com.onlinebookshop.model.Cart;
+import com.onlinebookshop.model.Rating;
 import com.onlinebookshop.model.Userdetails;
 
 public class Testmain {
@@ -467,8 +469,41 @@ public class Testmain {
 						for (int i = 0; i < conList.size(); i++) {
 							System.out.println(conList.get(i));
 						}
-					}
-					}
+			 case 6:
+				 BookdetailsDao prodao1 = new BookdetailsDao();
+				 Ratingdao ratingdao = new Ratingdao();
+				 System.out.println("Enter book name to add rating ");
+				 String bookname = scan.nextLine();
+				 System.out.println("Enter the rating ");
+				 double rating = scan.nextDouble();
+				 scan.nextLine();
+				 String email1=currentUser.getEmail_id();
+				 int useid=userDao.findUserId(email1);
+				 
+				   int proid=prodao1.findProductid(bookname);
+				   Rating ratingmodel = new Rating(useid,proid,rating);
+				   int result =ratingdao.insertrating(ratingmodel);
+				   if(result>0) {
+					   System.out.println("Your rating is sucessfully added ");
+					   
+				   }
+				   break;
+			 case 7:
+				 BookdetailsDao prodao2 = new BookdetailsDao();
+				 Ratingdao ratingdao1 = new Ratingdao();
+				 System.out.println("Enter the book name ");
+				 String bookname1 =scan.nextLine();
+				 int proid2=prodao2.findProductid(bookname1);
+				 Rating ratingmodel1 = new Rating(proid2);
+				double rate= ratingdao1.fetchrating(ratingmodel1);
+				if(rate>0) {
+					System.out.println(bookname1 + ":" + rate);
+				}else {
+				   System.out.println("No ratings ");	
+				}
+				break;
+			}
+		}
 				} else
 					flag = 0;
 				break;
