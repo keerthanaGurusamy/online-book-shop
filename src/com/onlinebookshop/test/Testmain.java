@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 import com.onlinebookshop.dao.AuthorDetailsDao;
 import com.onlinebookshop.dao.BookdetailsDao;
-import com.onlinebookshop.dao.CartDao;
+import com.onlinebookshop.dao.OrderDetailsDao;
 import com.onlinebookshop.dao.Ratingdao;
 import com.onlinebookshop.dao.UserdetailsDao;
 import com.onlinebookshop.model.AuthorDetails;
 import com.onlinebookshop.model.Bookdetails;
-import com.onlinebookshop.model.Cart;
+import com.onlinebookshop.model.OrderDetails;
 import com.onlinebookshop.model.Rating;
 import com.onlinebookshop.model.Userdetails;
 
@@ -334,8 +334,8 @@ public class Testmain {
 						System.out.println("book id is :" + books);
 						break;
 					case 11:       // View Cart
-						 CartDao cart=new CartDao();
-						 List<Cart> cart_list = cart.viewCart();
+						 OrderDetailsDao cart=new OrderDetailsDao();
+						 List<OrderDetails> cart_list = cart.viewCart();
 						 for (int i = 0; i < cart_list.size(); i++) {
 					   	System.out.println(cart_list.get(i));
 						}
@@ -349,7 +349,7 @@ public class Testmain {
 					boolean flag1 = true;
 					while(flag1) {
 					System.out.println(
-							"\n1.Show Products\n2.update Profile\n3.Delete Profile\n4.filter by price\n5.Filter by condition\nEnter your choice");
+							"\n1.Show Products\n2.update Profile\n3.Delete Profile\n4.filter by price\n5.Filter by condition\n6.Add Ratings\n7.View Ratings\nEnter your choice");
 					int userChoice = Integer.parseInt(scan.nextLine());
 
 					switch (userChoice) {
@@ -362,14 +362,14 @@ public class Testmain {
 							System.out.println(l_pro.get(i));
 						}
 						
-						System.out.println("\n1.Order Product\n2.update cart\n3.delete cart\nEnter your choice");
+						System.out.println("\n1.Order Product\n2.My orders\n3.update order\n4.delete order\nEnter your choice");
 						int orderChoice=Integer.parseInt(scan.nextLine());
 						
 						switch(orderChoice)
 						{
 					   case 1:
-						    String userName=currentUser.getEmail_id();
-							int id1=userDao.findUserId(userName);
+							String userName = currentUser.getEmail_id();
+							int id1 = userDao.findUserId(userName);
 							System.out.println("user_id :"+id1);
 							
 							System.out.print("Enter the Product Name");
@@ -381,9 +381,9 @@ public class Testmain {
 							System.out.print("Enter no of Products needed");
 							int quantity=Integer.parseInt(scan.nextLine());
 							System.out.println("1.confirm order" + "\n" +"2.Cancel Order" );
-							int cnfinp = scan.nextInt();
+							int placeorder = scan.nextInt();
 							scan.nextLine();
-							switch(cnfinp) {
+							switch(placeorder) {
 							
 							case 1:
 							int totalprice=(quantity*price);
@@ -391,8 +391,8 @@ public class Testmain {
 							int dedwallbal = wallet - totalprice;
 							
 							if(totalprice<=wallet) {
-							 Cart order=new Cart(id,id1,quantity,totalprice);
-							 CartDao cartDao=new CartDao();
+							 OrderDetails order=new OrderDetails(id,id1,quantity,totalprice);
+							 OrderDetailsDao cartDao=new OrderDetailsDao();
 							 
 							cartDao.insertOrder(order);
 							Userdetails userdetails = new Userdetails(id1,dedwallbal);
@@ -412,9 +412,16 @@ public class Testmain {
 							}
 							break;
 							
-					   case 2:      //Update cart Quantity
-						   CartDao cart=new CartDao();
-						   cart=new CartDao();
+					   case 2: 
+						   
+						   String email1=currentUser.getEmail_id();
+						   int useid=userDao.findUserId(email1);
+						   
+							 
+						   
+					   case 3:     //Update cart Quantity
+						   OrderDetailsDao cart=new OrderDetailsDao();
+						   cart=new OrderDetailsDao();
 						   System.out.println("Enter the Product name");
 						   String proname=scan.nextLine();
 						   int proid=prodao.findProductid(proname);
@@ -423,8 +430,8 @@ public class Testmain {
 						   int updatequantity=scan.nextInt();
 						   int cartquantity=cart.updateCart(updatequantity, proid);
 						   break;
-					   case 3:
-						    cart = new CartDao();
+					   case 4:
+						    cart = new OrderDetailsDao();
 							System.out.print("Enter books to delete");
 							String deletebooks = scan.nextLine();
 							int bookid=prodao.findProductid(deletebooks);
@@ -455,13 +462,8 @@ public class Testmain {
 						ResultSet rs = prodao.filterPrice(pricerange);
 						while(rs.next())
 						{
-						//	Bookdetails product = new Bookdetails();
 							System.out.println(rs.getString(2)+rs.getString(3)+rs.getInt(4)+rs.getString(5)+rs.getString(6)+rs.getInt(7)+rs.getString(8)+rs.getString(9)+"");
 						}
-//						List<Bookdetails> List = prodao.filterPrice(pricerange);
-//						for (int i = 0; i < List.size(); i++) {
-//							System.out.println(List.get(i));
-//						}
 						break;
 			 case 5:
 						prodao = new BookdetailsDao();
